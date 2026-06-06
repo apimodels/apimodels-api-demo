@@ -1,0 +1,29 @@
+# Secrets — never commit your API key
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Node
+node_modules/
+package-lock.json
+pnpm-lock.yaml
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+
+# Generated output
+*.png
+*.jpg
+*.jpeg
+*.mp4
+*.mp3
+*.wav
+out/

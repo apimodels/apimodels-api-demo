@@ -1,0 +1,16 @@
+{
+  "name": "apimodels-api-examples-node",
+  "version": "1.0.0",
+  "description": "Node.js examples for the API Models unified API",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "image": "node image-generation.mjs",
+    "video": "node video-generation.mjs",
+    "chat": "node chat-openai-sdk.mjs",
+    "tts": "node text-to-speech.mjs"
+  },
+  "dependencies": {
+    "openai": "^4.0.0"
+  }
+}

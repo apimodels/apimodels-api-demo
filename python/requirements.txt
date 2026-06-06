@@ -1,0 +1,4 @@
+# Only needed for the OpenAI-compatible chat / embeddings examples.
+# The image / video / TTS examples use the standard library (urllib) — no deps.
+openai>=1.0.0
+requests>=2.31.0
