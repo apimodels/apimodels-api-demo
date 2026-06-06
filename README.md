@@ -66,6 +66,7 @@ curl -X POST https://apimodels.app/api/v1/images/generations-sync \
 | Embeddings | `POST /embeddings` | OpenAI‑compatible |
 | Text‑to‑speech | `POST /tts/stream` | Streams audio bytes |
 | Account balance | `GET /balance` | Your remaining credits (USD); free, read‑only |
+| Voices & cloning | `GET /minimax/voices`, `POST /minimax/voice/clone` | List, clone or design custom voices |
 
 Full parameter reference and the complete, always‑current model list:
 **[apimodels.app/en/docs](https://apimodels.app/en/docs)**.

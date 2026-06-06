@@ -64,6 +64,7 @@ curl -X POST https://apimodels.app/api/v1/images/generations-sync \
 | 向量 Embedding | `POST /embeddings` | 兼容 OpenAI |
 | 语音合成 TTS | `POST /tts/stream` | 流式返回音频字节 |
 | 账户余额 | `GET /balance` | 查询剩余额度(美元),免费、只读 |
+| 音色与复刻 | `GET /minimax/voices`、`POST /minimax/voice/clone` | 列出 / 复刻 / 设计自定义音色 |
 
 完整参数与**始终最新的模型清单**见:**[apimodels.app/zh/docs](https://apimodels.app/zh/docs)**。
 
