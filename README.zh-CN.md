@@ -49,9 +49,9 @@ curl -X POST https://apimodels.app/api/v1/images/generations-sync \
 
 | 目录 | 语言 | 示例 |
 |---|---|---|
-| [`curl/`](./curl) | Shell / cURL | 图片、图片编辑、视频(含轮询)、对话、语音合成 |
-| [`python/`](./python) | Python 3 | 图片、视频、对话(OpenAI SDK)、向量、TTS |
-| [`node/`](./node) | Node.js (ESM) | 图片、视频、对话(OpenAI SDK)、TTS |
+| [`curl/`](./curl) | Shell / cURL | 图片、图片编辑、视频(含轮询)、对话、语音合成、余额 |
+| [`python/`](./python) | Python 3 | 图片、视频、对话(OpenAI SDK)、向量、TTS、余额 |
+| [`node/`](./node) | Node.js (ESM) | 图片、视频、对话(OpenAI SDK)、TTS、余额 |
 
 ## 5. 覆盖的端点
 
@@ -63,6 +63,7 @@ curl -X POST https://apimodels.app/api/v1/images/generations-sync \
 | 对话 / 大模型 | `POST /chat/completions` | 兼容 OpenAI |
 | 向量 Embedding | `POST /embeddings` | 兼容 OpenAI |
 | 语音合成 TTS | `POST /tts/stream` | 流式返回音频字节 |
+| 账户余额 | `GET /balance` | 查询剩余额度(美元),免费、只读 |
 
 完整参数与**始终最新的模型清单**见:**[apimodels.app/zh/docs](https://apimodels.app/zh/docs)**。
 

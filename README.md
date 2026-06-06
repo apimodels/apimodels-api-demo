@@ -51,9 +51,9 @@ curl -X POST https://apimodels.app/api/v1/images/generations-sync \
 
 | Folder | Language | Examples |
 |---|---|---|
-| [`curl/`](./curl) | Shell / cURL | image, image edit, video (+poll), chat, text‑to‑speech |
-| [`python/`](./python) | Python 3 | image, video, chat (OpenAI SDK), embeddings, TTS |
-| [`node/`](./node) | Node.js (ESM) | image, video, chat (OpenAI SDK), TTS |
+| [`curl/`](./curl) | Shell / cURL | image, image edit, video (+poll), chat, text‑to‑speech, balance |
+| [`python/`](./python) | Python 3 | image, video, chat (OpenAI SDK), embeddings, TTS, balance |
+| [`node/`](./node) | Node.js (ESM) | image, video, chat (OpenAI SDK), TTS, balance |
 
 ## 5. Endpoints covered
 
@@ -65,6 +65,7 @@ curl -X POST https://apimodels.app/api/v1/images/generations-sync \
 | Chat / LLM | `POST /chat/completions` | OpenAI‑compatible |
 | Embeddings | `POST /embeddings` | OpenAI‑compatible |
 | Text‑to‑speech | `POST /tts/stream` | Streams audio bytes |
+| Account balance | `GET /balance` | Your remaining credits (USD); free, read‑only |
 
 Full parameter reference and the complete, always‑current model list:
 **[apimodels.app/en/docs](https://apimodels.app/en/docs)**.
