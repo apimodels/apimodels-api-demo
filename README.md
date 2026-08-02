@@ -95,6 +95,15 @@ Async tasks return `data.taskId`; poll the matching `GET ...?task_id=<id>` until
 
 [MIT](./LICENSE) — use these examples freely in your own projects.
 
+## Prompt libraries
+
+Curated prompts, each shown next to the clip or image it actually produced:
+
+- **[MiniMax H3 prompts](https://github.com/stimQQ/minimax-h3-prompts)** — 135 video
+  prompts (repo) · [browse with video](https://apimodels.app/minimax-h3-prompts)
+- **[GPT Image 2 prompts](https://apimodels.app/gpt-image-2-prompts)** — 957 image
+  prompts, browsable by category
+
 ## Links
 
 - 🌐 Website: https://apimodels.app

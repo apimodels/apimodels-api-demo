@@ -92,6 +92,15 @@ curl -X POST https://apimodels.app/api/v1/images/generations-sync \
 
 [MIT](./LICENSE) —— 可自由用于你自己的项目。
 
+## 提示词库
+
+每条提示词都配了它实际产出的成片或成图:
+
+- **[MiniMax H3 提示词](https://github.com/stimQQ/minimax-h3-prompts)** —— 135 条视频
+  提示词(仓库)· [配视频浏览](https://apimodels.app/minimax-h3-prompts)
+- **[GPT Image 2 提示词](https://apimodels.app/gpt-image-2-prompts)** —— 957 条图像
+  提示词,按类目浏览
+
 ## 链接
 
 - 🌐 官网:https://apimodels.app
