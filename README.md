@@ -2,11 +2,11 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 [![Website](https://img.shields.io/badge/Website-apimodels.app-F5FF60)](https://apimodels.app)
-[![Docs](https://img.shields.io/badge/Docs-API%20Reference-blue)](https://apimodels.app/en/docs)
+[![Docs](https://img.shields.io/badge/Docs-API%20Reference-blue)](https://apimodels.app/docs)
 
 Runnable example code for the **[API Models](https://apimodels.app)** unified API —
 one API key and one OpenAI‑compatible endpoint to call **image, video, LLM, audio
-and embedding** models (GPT‑Image, Gemini, Grok Imagine, Seedance, Kling, VEO,
+and embedding** models (GPT‑Image, Gemini, Grok, Seedance, Kling, VEO,
 Claude, ElevenLabs and more), at up to **60–95% lower cost** than calling each
 provider directly.
 
@@ -19,7 +19,7 @@ bring your own API key, which you generate yourself on our website.
 
 ## 1. Get your API key
 
-1. Sign up at **[apimodels.app](https://apimodels.app)** (new accounts get **$1 free credit**).
+1. Sign up at **[apimodels.app](https://apimodels.app)** (new accounts get **$0.10 free credit**).
 2. Open **Console → API Keys** and create a key.
 3. Export it as an environment variable (every example reads this):
 
@@ -40,49 +40,79 @@ Never hard‑code your key or commit it to git. Copy `.env.example` to `.env` fo
 ## 3. Quick start (cURL)
 
 ```bash
-# Image (synchronous — returns the image URL directly)
-curl -X POST https://apimodels.app/api/v1/images/generations-sync \
+# Image — synchronous because `size` is WxH and there is no callback_url.
+# Returns the OpenAI shape: { "created": ..., "data": [ { "url": "https://..." } ] }
+curl -X POST https://apimodels.app/api/v1/images/generations \
   -H "Authorization: Bearer $APIMODELS_API_KEY" \
   -H "Content-Type: application/json" \
-  -d '{ "model": "gpt-image-2-lite", "prompt": "a red panda barista, studio light", "size": "1024x1024" }'
+  -d '{ "model": "gpt-image-2-lite", "prompt": "a red panda barista, studio light", "size": "1024x1024", "response_format": "url" }'
 ```
 
-## 4. What's in this repo
+## 4. What a $0.10 balance actually buys
+
+New accounts start with **$0.10**. Every example in this repo except voice cloning
+runs inside that, and running all of them in this order still leaves change:
+
+| Example | Model | Cost per run | Fits in $0.10? |
+|---|---|---|---|
+| `chat-*` | `claude-sonnet-4-6` | < $0.001 (token‑based) | yes |
+| `embeddings.py` | `text-embedding-3-small` | fractions of a cent | yes |
+| `text-to-speech.*` | `eleven-tts-flash` | ~$0.004 (min charge) | yes |
+| `image-generation.*` | `gpt-image-2-lite` @ 1024×1024 | $0.008 | yes |
+| `image-edit.sh` | `gpt-image-2-lite` @ 1536×1024 | $0.015 | yes (needs your own image URL) |
+| `video-generation.*` | `veo-3.1-fast-fhd` | $0.07 flat | yes — but only this one video model |
+| `voice-clone.sh` | MiniMax voice cloning | **$15.80 once per voice** | **no** — top up first |
+
+Two things worth knowing before you spend:
+
+- **Video is the expensive modality.** `veo-3.1-fast-fhd` at $0.07 per clip is the
+  only video model a fresh $0.10 account can complete. The next cheapest are
+  `grok-video-3` ($0.12 for its 6‑second minimum) and `seedance-2.0-fast` (~$0.36
+  for a short 480p clip) — both cost more than the whole signup credit and will
+  return `402 Insufficient credits`.
+- **Voice cloning is a flat $15.80**, charged once when the clone succeeds. That is
+  the upstream custom‑voice fee at cost, not a per‑second rate. Read the warning at
+  the top of `curl/voice-clone.sh` before running it.
+
+Failed generations are not charged. Live prices: **[apimodels.app/pricing](https://apimodels.app/pricing)**.
+
+## 5. What's in this repo
 
 | Folder | Language | Examples |
 |---|---|---|
-| [`curl/`](./curl) | Shell / cURL | image, image edit, video (+poll), chat, text‑to‑speech, balance |
+| [`curl/`](./curl) | Shell / cURL | image, image edit, video (+poll), chat, text‑to‑speech, voice clone, balance |
 | [`python/`](./python) | Python 3 | image, video, chat (OpenAI SDK), embeddings, TTS, balance |
 | [`node/`](./node) | Node.js (ESM) | image, video, chat (OpenAI SDK), TTS, balance |
 
-## 5. Endpoints covered
+## 6. Endpoints covered
 
 | Capability | Method & path | Notes |
 |---|---|---|
-| Image generation (sync) | `POST /images/generations-sync` | Returns `resultUrls` directly |
-| Image generation / edit (async) | `POST /images/generations` → `GET /images/generations?task_id=` | Pass `image` for edits |
+| Image generation / edit | `POST /images/generations` | Async by default (`data.taskId` → poll `GET /images/generations?task_id=`). Pass a `WxH` `size` and no `callback_url` to get a **synchronous** OpenAI‑shaped reply instead. Pass `image_url` / `image_urls` to edit. |
 | Video generation | `POST /video/generations` → `GET /video/generations?task_id=` | Async; poll for the result |
 | Chat / LLM | `POST /chat/completions` | OpenAI‑compatible |
 | Embeddings | `POST /embeddings` | OpenAI‑compatible |
-| Text‑to‑speech | `POST /tts/stream` | Streams audio bytes |
+| Text‑to‑speech | `POST /tts/stream` | Streams audio bytes. This is where the `eleven-tts-*` models live — they are **not** accepted by `/audio/generations`. |
+| Other audio (music, dialogue, dubbing, MiniMax TTS) | `POST /audio/generations` → `GET /audio/generations?task_id=` | `suno-v5`, `eleven-dialogue`, `eleven-isolator`, `eleven-dubbing`, `minimax-speech-*`, `kling-*` |
 | Account balance | `GET /balance` | Your remaining credits (USD); free, read‑only |
-| Voices & cloning | `GET /minimax/voices`, `POST /minimax/voice/clone` | List, clone or design custom voices |
+| Voices & cloning | `GET /minimax/voices`, `POST /minimax/voice/clone` | List, clone or design custom voices (cloning is $15.80 per voice) |
+| Model list | `GET /models` | OpenAI‑compatible, **no API key needed** — the authoritative list of ids you can call |
 
-Full parameter reference and the complete, always‑current model list:
-**[apimodels.app/en/docs](https://apimodels.app/en/docs)**.
+Full parameter reference: **[apimodels.app/docs](https://apimodels.app/docs)**.
 
-## 6. Popular models
+## 7. Popular models
 
-- **Image** — `gpt-image-2`, `gpt-image-2-lite`, `gemini-3-pro-image`, `grok-imagine-image`, `doubao-seedream-4-5-251128`, `kling-image-o1`
-- **Video** — `grok-imagine-video-1.5`, `grok-imagine-video-1.5-beta`, `seedance-2.0`, `seedance-2.0-fast`, `kling-v2-6`, `veo-3.1`
-- **LLM** — Claude, GPT, Gemini families (OpenAI‑compatible names — see docs)
-- **Audio** — `eleven-tts-flash`, `eleven-tts-multilingual`, `eleven-tts-v3`
+Every id below was checked against the live API. When in doubt,
+`curl https://apimodels.app/api/v1/models` is the source of truth.
 
-See live pricing at **[apimodels.app/en/pricing](https://apimodels.app/en/pricing)**.
+- **Image** — `gpt-image-2-lite`, `gpt-image-2`, `gemini-3-pro-image`, `grok-imagine-image`, `doubao-seedream-4-5-251128`, `kling-image-o1`
+- **Video** — `veo-3.1-fast-fhd` (cheapest, $0.07/clip), `grok-video-3`, `seedance-2.0-fast`, `seedance-2.0`, `kling-v2-6`, `minimax-h3`, `veo-3.1`
+- **LLM** — Claude, GPT, Gemini, DeepSeek, Qwen, GLM families (OpenAI‑compatible names — see docs)
+- **Audio** — `eleven-tts-flash`, `eleven-tts-turbo`, `eleven-tts-multilingual`, `eleven-tts-v3` (all on `/tts/stream`); `minimax-speech-02-turbo`, `suno-v5` (on `/audio/generations`)
 
-## 7. Response shape
+## 8. Response shape
 
-Most REST endpoints return:
+Task‑based endpoints return:
 
 ```json
 { "code": 200, "msg": "success", "data": { /* ... */ } }
@@ -90,6 +120,12 @@ Most REST endpoints return:
 
 Async tasks return `data.taskId`; poll the matching `GET ...?task_id=<id>` until
 `data.state` is `completed` (then read `data.resultUrls`) or `failed`.
+
+The OpenAI‑compatible paths (`/chat/completions`, `/embeddings`, `/models`, and
+`/images/generations` in synchronous mode) return OpenAI's own shapes instead.
+
+**Generated files are kept for 7 days.** Download anything you want to keep — the
+result URL stops working after that.
 
 ## License
 
@@ -99,14 +135,14 @@ Async tasks return `data.taskId`; poll the matching `GET ...?task_id=<id>` until
 
 Curated prompts, each shown next to the clip or image it actually produced:
 
-- **[MiniMax H3 prompts](https://github.com/stimQQ/minimax-h3-prompts)** — 135 video
+- **[Stunning MiniMax H3 prompts](https://github.com/stimQQ/stunning-minimax-h3-prompts)** — 222 video
   prompts (repo) · [browse with video](https://apimodels.app/minimax-h3-prompts)
-- **[GPT Image 2 prompts](https://apimodels.app/gpt-image-2-prompts)** — 957 image
+- **[GPT Image 2 prompts](https://apimodels.app/gpt-image-2-prompts)** — 955 image
   prompts, browsable by category
 
 ## Links
 
-- 🌐 Website: https://apimodels.app
-- 📖 API Docs: https://apimodels.app/en/docs
-- 💳 Pricing: https://apimodels.app/en/pricing
-- 🔑 Console (create API keys): https://apimodels.app/en/console/api-keys
+- Website: https://apimodels.app
+- API Docs: https://apimodels.app/docs
+- Pricing: https://apimodels.app/pricing
+- Console (create API keys): https://apimodels.app/console/api-keys

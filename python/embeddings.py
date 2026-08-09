@@ -1,5 +1,7 @@
 """Text embeddings via the official OpenAI SDK — OpenAI-compatible endpoint.
 
+COST: token-based and tiny — a single short sentence is a fraction of a cent.
+
     pip install openai
     export APIMODELS_API_KEY="sk-..."
     python embeddings.py

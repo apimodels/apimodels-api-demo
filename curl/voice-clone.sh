@@ -1,6 +1,14 @@
 #!/usr/bin/env bash
 # Voice cloning (Minimax): upload a sample -> clone into your own voice_id -> use in TTS.
-# Note: the first TTS use of a cloned voice incurs a one-time activation fee.
+#
+# ⚠️  COST: cloning a voice is $15.80, charged once, the moment the clone succeeds.
+#     That is the upstream custom-voice fee passed through at cost — it is NOT a
+#     per-second or per-character charge, and it is far more than the $0.10 signup
+#     credit, so a new account will get 402 "Insufficient credits" here. Do not run
+#     this script to "try the API out"; run text-to-speech.sh instead (~$0.004) and
+#     come back when you actually want a permanent custom voice.
+#     Synthesis with the cloned voice afterwards is billed at the normal TTS rate.
+#
 # Usage: APIMODELS_API_KEY=sk-... ./voice-clone.sh path/to/sample.mp3
 set -euo pipefail
 : "${APIMODELS_API_KEY:?Set APIMODELS_API_KEY}"

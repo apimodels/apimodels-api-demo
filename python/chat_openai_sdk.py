@@ -1,5 +1,8 @@
 """Chat / LLM via the official OpenAI SDK — just change base_url.
 
+COST: token-based. A one-sentence answer from claude-sonnet-4-6 costs well under
+      $0.001, so this runs many times over inside the $0.10 signup credit.
+
     pip install openai
     export APIMODELS_API_KEY="sk-..."
     python chat_openai_sdk.py
@@ -13,7 +16,7 @@ client = OpenAI(
 )
 
 resp = client.chat.completions.create(
-    model="claude-sonnet-4-6",  # any LLM name from https://apimodels.app/en/docs
+    model="claude-sonnet-4-6",  # any LLM name from https://apimodels.app/docs
     messages=[
         {"role": "user", "content": "Explain what an API gateway is in one sentence."},
     ],

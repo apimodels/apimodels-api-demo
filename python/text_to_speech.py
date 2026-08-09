@@ -1,5 +1,13 @@
 """Text-to-speech — streams audio bytes; save them to an .mp3 file.
 
+ElevenLabs TTS lives on POST /tts/stream (NOT /audio/generations — that endpoint
+does not accept eleven-tts-* ids). Valid models: eleven-tts-flash, eleven-tts-turbo,
+eleven-tts-multilingual, eleven-tts-v3.
+
+COST: $0.0425 per 1000 characters on flash/turbo ($0.085 on multilingual/v3), with
+      a minimum charge of one tenth of that. The call below bills about $0.004 —
+      well inside the $0.10 signup credit.
+
     export APIMODELS_API_KEY="sk-..."
     python text_to_speech.py
 """
