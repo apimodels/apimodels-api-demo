@@ -9,7 +9,7 @@ import os
 import requests
 
 API_KEY = os.environ["APIMODELS_API_KEY"]
-BASE_URL = "https://apimodels.app/api/v1"
+BASE_URL = "https://api.apimodels.app/v1"
 
 resp = requests.get(
     f"{BASE_URL}/balance",

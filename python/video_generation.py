@@ -19,7 +19,7 @@ import time
 import requests
 
 API_KEY = os.environ["APIMODELS_API_KEY"]
-BASE_URL = "https://apimodels.app/api/v1"
+BASE_URL = "https://api.apimodels.app/v1"
 HEADERS = {"Authorization": f"Bearer {API_KEY}", "Content-Type": "application/json"}
 
 # 1) Create the task.

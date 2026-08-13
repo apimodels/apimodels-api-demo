@@ -13,7 +13,7 @@
 set -euo pipefail
 : "${APIMODELS_API_KEY:?Set APIMODELS_API_KEY}"
 SAMPLE="${1:?Pass a clean voice sample, e.g. ./voice-clone.sh sample.mp3}"
-BASE="https://apimodels.app/api/v1"
+BASE="https://api.apimodels.app/v1"
 AUTH="Authorization: Bearer ${APIMODELS_API_KEY}"
 VOICE_ID="myBrandVoice01"   # must start with a letter, >= 8 chars
 

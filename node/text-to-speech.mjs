@@ -14,7 +14,7 @@ import { writeFile } from "node:fs/promises";
 
 const API_KEY = process.env.APIMODELS_API_KEY;
 if (!API_KEY) throw new Error("Set APIMODELS_API_KEY");
-const BASE_URL = "https://apimodels.app/api/v1";
+const BASE_URL = "https://api.apimodels.app/v1";
 
 const res = await fetch(`${BASE_URL}/tts/stream`, {
   method: "POST",

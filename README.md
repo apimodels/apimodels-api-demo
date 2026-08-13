@@ -33,7 +33,7 @@ Never hard‑code your key or commit it to git. Copy `.env.example` to `.env` fo
 
 | | |
 |---|---|
-| **Base URL** | `https://apimodels.app/api/v1` |
+| **Base URL** | `https://api.apimodels.app/v1` |
 | **Auth header** | `Authorization: Bearer $APIMODELS_API_KEY` |
 | **LLM/chat** | OpenAI‑compatible — point any OpenAI SDK at the base URL above |
 
@@ -42,7 +42,7 @@ Never hard‑code your key or commit it to git. Copy `.env.example` to `.env` fo
 ```bash
 # Image — synchronous because `size` is WxH and there is no callback_url.
 # Returns the OpenAI shape: { "created": ..., "data": [ { "url": "https://..." } ] }
-curl -X POST https://apimodels.app/api/v1/images/generations \
+curl -X POST https://api.apimodels.app/v1/images/generations \
   -H "Authorization: Bearer $APIMODELS_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{ "model": "gpt-image-2-lite", "prompt": "a red panda barista, studio light", "size": "1024x1024", "response_format": "url" }'
@@ -103,7 +103,7 @@ Full parameter reference: **[apimodels.app/docs](https://apimodels.app/docs)**.
 ## 7. Popular models
 
 Every id below was checked against the live API. When in doubt,
-`curl https://apimodels.app/api/v1/models` is the source of truth.
+`curl https://api.apimodels.app/v1/models` is the source of truth.
 
 - **Image** — `gpt-image-2-lite`, `gpt-image-2`, `gemini-3-pro-image`, `grok-imagine-image`, `doubao-seedream-4-5-251128`, `kling-image-o1`
 - **Video** — `veo-3.1-fast-fhd` (cheapest, $0.07/clip), `grok-video-3`, `seedance-2.0-fast`, `seedance-2.0`, `kling-v2-6`, `minimax-h3`, `veo-3.1`

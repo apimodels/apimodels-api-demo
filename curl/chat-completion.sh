@@ -8,7 +8,7 @@
 set -euo pipefail
 : "${APIMODELS_API_KEY:?Set APIMODELS_API_KEY}"
 
-curl -sS -X POST https://apimodels.app/api/v1/chat/completions \
+curl -sS -X POST https://api.apimodels.app/v1/chat/completions \
   -H "Authorization: Bearer ${APIMODELS_API_KEY}" \
   -H "Content-Type: application/json" \
   -d '{
@@ -18,4 +18,4 @@ curl -sS -X POST https://apimodels.app/api/v1/chat/completions \
     ]
   }'
 # See https://apimodels.app/docs for the full list of LLM model names, or call
-# GET https://apimodels.app/api/v1/models (no key needed) for the live list.
+# GET https://api.apimodels.app/v1/models (no key needed) for the live list.

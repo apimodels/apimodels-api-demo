@@ -17,7 +17,7 @@
 set -euo pipefail
 : "${APIMODELS_API_KEY:?Set APIMODELS_API_KEY (create one at https://apimodels.app/console/api-keys)}"
 
-curl -sS -X POST https://apimodels.app/api/v1/images/generations \
+curl -sS -X POST https://api.apimodels.app/v1/images/generations \
   -H "Authorization: Bearer ${APIMODELS_API_KEY}" \
   -H "Content-Type: application/json" \
   -d '{

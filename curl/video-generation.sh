@@ -20,7 +20,7 @@ set -euo pipefail
 #    Text-to-video: a prompt is all you need, no assets to host anywhere.
 #    For image-to-video add:  "images": ["https://<publicly reachable>.png"]
 #    (it must be a public URL — our servers fetch it, so localhost won't work).
-TASK_ID=$(curl -sS -X POST https://apimodels.app/api/v1/video/generations \
+TASK_ID=$(curl -sS -X POST https://api.apimodels.app/v1/video/generations \
   -H "Authorization: Bearer ${APIMODELS_API_KEY}" \
   -H "Content-Type: application/json" \
   -d '{
@@ -33,7 +33,7 @@ echo "task: ${TASK_ID}"
 
 # 2) Poll until completed / failed
 while true; do
-  RESP=$(curl -sS "https://apimodels.app/api/v1/video/generations?task_id=${TASK_ID}" \
+  RESP=$(curl -sS "https://api.apimodels.app/v1/video/generations?task_id=${TASK_ID}" \
     -H "Authorization: Bearer ${APIMODELS_API_KEY}")
   STATE=$(echo "$RESP" | sed -n 's/.*"state":"\([^"]*\)".*/\1/p')
   echo "state: ${STATE}"

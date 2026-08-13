@@ -11,7 +11,7 @@ from openai import OpenAI
 
 client = OpenAI(
     api_key=os.environ["APIMODELS_API_KEY"],
-    base_url="https://apimodels.app/api/v1",
+    base_url="https://api.apimodels.app/v1",
 )
 
 resp = client.embeddings.create(

@@ -31,7 +31,7 @@ export APIMODELS_API_KEY="sk-你的key"
 
 | | |
 |---|---|
-| **Base URL** | `https://apimodels.app/api/v1` |
+| **Base URL** | `https://api.apimodels.app/v1` |
 | **鉴权头** | `Authorization: Bearer $APIMODELS_API_KEY` |
 | **大模型/对话** | 兼容 OpenAI —— 把任意 OpenAI SDK 的 base_url 指到上面即可 |
 
@@ -40,7 +40,7 @@ export APIMODELS_API_KEY="sk-你的key"
 ```bash
 # 图片 —— size 写成 宽x高 且不带 callback_url,这一次调用就是同步的,
 # 直接返回 OpenAI 结构: { "created": ..., "data": [ { "url": "https://..." } ] }
-curl -X POST https://apimodels.app/api/v1/images/generations \
+curl -X POST https://api.apimodels.app/v1/images/generations \
   -H "Authorization: Bearer $APIMODELS_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{ "model": "gpt-image-2-lite", "prompt": "一只在咖啡店当咖啡师的小熊猫,影棚灯光", "size": "1024x1024", "response_format": "url" }'
@@ -98,7 +98,7 @@ curl -X POST https://apimodels.app/api/v1/images/generations \
 ## 7. 热门模型
 
 下面每个名字都在线上实测过。拿不准时,以
-`curl https://apimodels.app/api/v1/models` 的返回为准。
+`curl https://api.apimodels.app/v1/models` 的返回为准。
 
 - **图片** —— `gpt-image-2-lite`、`gpt-image-2`、`gemini-3-pro-image`、`grok-imagine-image`、`doubao-seedream-4-5-251128`、`kling-image-o1`
 - **视频** —— `veo-3.1-fast-fhd`(最便宜,每条 $0.07)、`grok-video-3`、`seedance-2.0-fast`、`seedance-2.0`、`kling-v2-6`、`minimax-h3`、`veo-3.1`

@@ -13,7 +13,7 @@
 set -euo pipefail
 : "${APIMODELS_API_KEY:?Set APIMODELS_API_KEY}"
 
-curl -sS -X POST https://apimodels.app/api/v1/tts/stream \
+curl -sS -X POST https://api.apimodels.app/v1/tts/stream \
   -H "Authorization: Bearer ${APIMODELS_API_KEY}" \
   -H "Content-Type: application/json" \
   -d '{

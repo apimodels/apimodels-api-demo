@@ -10,7 +10,7 @@ import OpenAI from "openai";
 
 const client = new OpenAI({
   apiKey: process.env.APIMODELS_API_KEY,
-  baseURL: "https://apimodels.app/api/v1",
+  baseURL: "https://api.apimodels.app/v1",
 });
 
 const resp = await client.chat.completions.create({
