@@ -135,7 +135,7 @@ result URL stops working after that.
 
 Curated prompts, each shown next to the clip or image it actually produced:
 
-- **[Stunning MiniMax H3 prompts](https://github.com/stimQQ/stunning-minimax-h3-prompts)** — 222 video
+- **[Stunning MiniMax H3 prompts](https://github.com/apimodels/stunning-minimax-h3-prompts)** — 222 video
   prompts (repo) · [browse with video](https://apimodels.app/minimax-h3-prompts)
 - **[GPT Image 2 prompts](https://apimodels.app/gpt-image-2-prompts)** — 955 image
   prompts, browsable by category

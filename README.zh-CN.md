@@ -129,7 +129,7 @@ curl -X POST https://api.apimodels.app/v1/images/generations \
 
 每条提示词都配了它实际产出的成片或成图:
 
-- **[Stunning MiniMax H3 提示词](https://github.com/stimQQ/stunning-minimax-h3-prompts)** —— 222 条视频
+- **[Stunning MiniMax H3 提示词](https://github.com/apimodels/stunning-minimax-h3-prompts)** —— 222 条视频
   提示词(仓库)· [配视频浏览](https://apimodels.app/minimax-h3-prompts)
 - **[GPT Image 2 提示词](https://apimodels.app/gpt-image-2-prompts)** —— 955 条图像
   提示词,按类目浏览
