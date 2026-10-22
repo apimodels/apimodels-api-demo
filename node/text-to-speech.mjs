@@ -6,7 +6,7 @@
 //
 // COST: $0.0425 per 1000 characters on flash/turbo ($0.085 on multilingual/v3), with
 //       a minimum charge of one tenth of that. The line below bills about $0.004 —
-//       well inside the $0.10 signup credit.
+//       well inside the $0.10 trial credit.
 //
 //   export APIMODELS_API_KEY="sk-..."
 //   node text-to-speech.mjs
@@ -21,7 +21,7 @@ const res = await fetch(`${BASE_URL}/tts/stream`, {
   headers: { Authorization: `Bearer ${API_KEY}`, "Content-Type": "application/json" },
   body: JSON.stringify({
     model: "eleven-tts-flash",
-    text: "Hello from API Models. This audio was generated through one unified API.",
+    text: "Hello from APIMODELS. This audio was generated through one unified API.",
     // voice_id: "21m00Tcm4TlvDq8ikWAM", // optional
   }),
 });

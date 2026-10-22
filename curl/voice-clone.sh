@@ -3,7 +3,7 @@
 #
 # ⚠️  COST: cloning a voice is $15.80, charged once, the moment the clone succeeds.
 #     That is the upstream custom-voice fee passed through at cost — it is NOT a
-#     per-second or per-character charge, and it is far more than the $0.10 signup
+#     per-second or per-character charge, and it is far more than the $0.10 trial
 #     credit, so a new account will get 402 "Insufficient credits" here. Do not run
 #     this script to "try the API out"; run text-to-speech.sh instead (~$0.004) and
 #     come back when you actually want a permanent custom voice.
