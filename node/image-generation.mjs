@@ -8,10 +8,9 @@
 // GET /images/generations?task_id=<id>.
 //
 // COST: $0.008 at 1024x1024 (gpt-image-2-lite, 1K tier). 2K is $0.015, 4K $0.025.
-//       Comfortably inside the $0.10 trial credit.
+//       Comfortably inside the $0.10 signup credit.
 //
-// Result files are kept for 30 days, then deleted — download the file if you want
-// to keep it.
+// Result URLs are kept for 7 days — download the file if you want to keep it.
 //
 //   export APIMODELS_API_KEY="sk-..."
 //   node image-generation.mjs

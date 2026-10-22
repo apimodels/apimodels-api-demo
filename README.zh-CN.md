@@ -1,13 +1,13 @@
-# APIMODELS —— 官方 API 调用示例
+# API Models —— 官方 API 调用示例
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 [![Website](https://img.shields.io/badge/Website-apimodels.app-F5FF60)](https://apimodels.app)
 [![Docs](https://img.shields.io/badge/Docs-API%20Reference-blue)](https://apimodels.app/zh/docs)
 
-**[APIMODELS](https://apimodels.app)** 统一 API 的可运行调用示例 —— 一个 API Key、
+**[API Models](https://apimodels.app)** 统一 API 的可运行调用示例 —— 一个 API Key、
 一个兼容 OpenAI 的端点,即可调用**图片、视频、大模型、语音、向量**等各家模型
 (GPT‑Image、Gemini、Grok、Seedance、Kling、VEO、Claude、ElevenLabs 等),
-价格最多比各家官方标价**低 63%**。
+价格比直接调用各家官方**低 60–95%**。
 
 > English: **[README.md](./README.md)**
 
@@ -17,8 +17,7 @@
 
 ## 1. 获取 API Key
 
-1. 到 **[apimodels.app](https://apimodels.app)** 用 Google 或支付宝登录。用 Google 个人邮箱(如 Gmail、Outlook)
-   或支付宝注册的新用户送 **$0.10 体验额度**,每人一次。
+1. 到 **[apimodels.app](https://apimodels.app)** 注册(新用户送 **$0.10 体验额度**)。
 2. 进入 **控制台 → API Keys**,创建一个 Key。
 3. 设为环境变量(所有示例都读它):
 
@@ -49,8 +48,8 @@ curl -X POST https://api.apimodels.app/v1/images/generations \
 
 ## 4. $0.10 体验额度够跑哪些示例
 
-体验额度是 **$0.10**。除了音色复刻,本仓库每个示例单独都跑得起,但不能一口气全跑:光视频
-一条就是 $0.088。想用体验额度看视频,就先跑视频示例;跑完还够跑对话、向量和语音合成。
+新账号开局是 **$0.10**。除了音色复刻,本仓库每个示例都跑得起;按下表顺序全跑一遍
+还有富余:
 
 | 示例 | 模型 | 单次花费 | $0.10 够吗 |
 |---|---|---|---|
@@ -59,15 +58,14 @@ curl -X POST https://api.apimodels.app/v1/images/generations \
 | `text-to-speech.*` | `eleven-tts-flash` | 约 $0.004(触发最低计费) | 够 |
 | `image-generation.*` | `gpt-image-2-lite` 1024×1024 | $0.008 | 够 |
 | `image-edit.sh` | `gpt-image-2-lite` 1536×1024 | $0.015 | 够(但要你自己的图片外链) |
-| `video-generation.*` | `veo-3.1-fast-fhd` | 每条 $0.088(固定价) | 单独够 —— 请第一个跑 |
+| `video-generation.*` | `veo-3.1-fast-fhd` | 每条 $0.07(固定价) | 够 —— 但只有这一个视频模型够 |
 | `voice-clone.sh` | MiniMax 音色复刻 | **每个音色一次性 $15.80** | **不够**,先充值 |
 
 花钱之前有两件事值得先知道:
 
-- **视频是唯一的"大头"。** `veo-3.1-fast-fhd` 一条 8 秒 1080p 是 $0.088(720p 版
-  `veo-3.1-fast-hd` 是 $0.08),$0.10 体验额度跑得起。很多别的视频模型比整个体验额度还贵
-  —— `grok-video-3` 最短 6 秒要 $0.24,`seedance-2.0-fast` 480p 最短 4 秒要 $0.28 ——
-  会直接返回 `402 Insufficient credits`。
+- **视频是唯一的"大头"。** `veo-3.1-fast-fhd` 每条 $0.07,是新账号唯一能跑完的视频
+  模型。次便宜的是 `grok-video-3`(最短 6 秒,$0.12)和 `seedance-2.0-fast`(480p 短片
+  约 $0.36)—— 它们都比整个体验额度还贵,直接返回 `402 Insufficient credits`。
 - **音色复刻是一口价 $15.80**,在复刻成功那一刻扣一次,不是按秒/按字计费。这是上游
   自定义音色费原样透传。跑 `curl/voice-clone.sh` 之前请先看文件开头的提示。
 
@@ -103,7 +101,7 @@ curl -X POST https://api.apimodels.app/v1/images/generations \
 `curl https://api.apimodels.app/v1/models` 的返回为准。
 
 - **图片** —— `gpt-image-2-lite`、`gpt-image-2`、`gemini-3-pro-image`、`grok-imagine-image`、`doubao-seedream-4-5-251128`、`kling-image-o1`
-- **视频** —— `veo-3.1-fast-fhd`(8 秒 1080p 每条 $0.088)、`grok-video-3`、`seedance-2.0-fast`、`seedance-2.0`、`kling-v2-6`、`minimax-h3`、`veo-3.1`
+- **视频** —— `veo-3.1-fast-fhd`(最便宜,每条 $0.07)、`grok-video-3`、`seedance-2.0-fast`、`seedance-2.0`、`kling-v2-6`、`minimax-h3`、`veo-3.1`
 - **大模型** —— Claude / GPT / Gemini / DeepSeek / Qwen / GLM 系列(兼容 OpenAI 命名,见文档)
 - **语音** —— `eleven-tts-flash`、`eleven-tts-turbo`、`eleven-tts-multilingual`、`eleven-tts-v3`(都走 `/tts/stream`);`minimax-speech-02-turbo`、`suno-v5`(走 `/audio/generations`)
 
@@ -121,7 +119,7 @@ curl -X POST https://api.apimodels.app/v1/images/generations \
 兼容 OpenAI 的那几条路径(`/chat/completions`、`/embeddings`、`/models`,以及同步
 模式下的 `/images/generations`)返回 OpenAI 自己的结构。
 
-**生成结果保留 30 天,之后删除**,链接随之失效,要留的请及时下载或转存。
+**生成结果只保留 7 天**,链接过期即失效,要留的请及时下载或转存。
 
 ## 许可证
 

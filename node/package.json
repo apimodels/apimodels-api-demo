@@ -1,7 +1,7 @@
 {
   "name": "apimodels-api-examples-node",
   "version": "1.0.0",
-  "description": "Node.js examples for the APIMODELS unified API",
+  "description": "Node.js examples for the API Models unified API",
   "type": "module",
   "private": true,
   "scripts": {

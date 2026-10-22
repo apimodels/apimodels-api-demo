@@ -2,7 +2,7 @@
 # Chat / LLM — OpenAI-compatible. Works with any OpenAI client by changing base_url.
 #
 # COST: token-based. A one-sentence answer from claude-sonnet-4-6 costs well under
-#       $0.001, so this runs many times over inside the $0.10 trial credit.
+#       $0.001, so this runs many times over inside the $0.10 signup credit.
 #
 # Usage: APIMODELS_API_KEY=sk-... ./chat-completion.sh
 set -euo pipefail

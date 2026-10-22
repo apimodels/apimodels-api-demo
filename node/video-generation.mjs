@@ -2,15 +2,14 @@
 //
 // Model: veo-3.1-fast-fhd — VEO 3.1 Fast, 1080p, native audio, flat price per clip.
 //
-// COST: $0.088 per clip (flat — 8 seconds at 1080p, fixed by the channel; the 720p
-//       veo-3.1-fast-hd is $0.08). It fits inside the $0.10 trial credit, so on
-//       trial credit run this before the other paid examples. Many other video
-//       models cost more than the whole trial credit (grok-video-3 is $0.24 for its
-//       6s minimum, seedance-2.0-fast $0.28 for 4s at 480p), so those will 402
-//       "Insufficient credits" until you top up.
+// COST: $0.07 per clip (flat — duration and resolution are fixed by the channel).
+//       This is the cheapest video model we run, and it is the only one a brand-new
+//       account can afford: signup credit is $0.10. Every other video model costs
+//       more than the whole signup credit (grok-video-3 is $0.12 for its 6s minimum,
+//       seedance-2.0-fast starts around $0.36), so those will 402 "Insufficient
+//       credits" until you top up.
 //
-// Result files are kept for 30 days, then deleted — download the file if you want
-// to keep it.
+// Result URLs are kept for 7 days — download the file if you want to keep it.
 //
 //   export APIMODELS_API_KEY="sk-..."
 //   node video-generation.mjs

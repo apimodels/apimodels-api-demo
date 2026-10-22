@@ -12,8 +12,7 @@
 # COST: $0.008 at 1024x1024 / $0.015 at 1536x1024 (gpt-image-2-lite; the price
 #       follows the output megapixels, 1K / 2K / 4K → $0.008 / $0.015 / $0.025).
 #
-# Result files are kept for 30 days, then deleted — download the file if you want
-# to keep it.
+# Result URLs are kept for 7 days — download the file if you want to keep it.
 #
 # Usage: APIMODELS_API_KEY=sk-... ./image-edit.sh
 set -euo pipefail

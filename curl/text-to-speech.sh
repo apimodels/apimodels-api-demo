@@ -7,7 +7,7 @@
 #
 # COST: $0.0425 per 1000 characters on flash/turbo ($0.085 on multilingual/v3), with
 #       a minimum charge of one tenth of that. The line below bills about $0.004 —
-#       well inside the $0.10 trial credit.
+#       well inside the $0.10 signup credit.
 #
 # Usage: APIMODELS_API_KEY=sk-... ./text-to-speech.sh
 set -euo pipefail
@@ -18,7 +18,7 @@ curl -sS -X POST https://api.apimodels.app/v1/tts/stream \
   -H "Content-Type: application/json" \
   -d '{
     "model": "eleven-tts-flash",
-    "text": "Hello from APIMODELS. This audio was generated through one unified API."
+    "text": "Hello from API Models. This audio was generated through one unified API."
   }' \
   --output speech.mp3
 
