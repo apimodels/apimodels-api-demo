@@ -1,14 +1,14 @@
-# API Models — Official API Examples
+# APIMODELS — Official API Examples
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 [![Website](https://img.shields.io/badge/Website-apimodels.app-F5FF60)](https://apimodels.app)
 [![Docs](https://img.shields.io/badge/Docs-API%20Reference-blue)](https://apimodels.app/docs)
 
-Runnable example code for the **[API Models](https://apimodels.app)** unified API —
+Runnable example code for the **[APIMODELS](https://apimodels.app)** unified API —
 one API key and one OpenAI‑compatible endpoint to call **image, video, LLM, audio
 and embedding** models (GPT‑Image, Gemini, Grok, Seedance, Kling, VEO,
-Claude, ElevenLabs and more), at up to **60–95% lower cost** than calling each
-provider directly.
+Claude, ElevenLabs and more), at up to **63% below the official list prices** of
+each provider.
 
 > 中文说明见 **[README.zh-CN.md](./README.zh-CN.md)**
 
@@ -19,7 +19,8 @@ bring your own API key, which you generate yourself on our website.
 
 ## 1. Get your API key
 
-1. Sign up at **[apimodels.app](https://apimodels.app)** (new accounts get **$0.10 free credit**).
+1. Sign in at **[apimodels.app](https://apimodels.app)** with Google or Alipay. Signing up with Google on a
+   personal mailbox (such as Gmail or Outlook) or with Alipay gets **$0.10 of trial credit**, once per person.
 2. Open **Console → API Keys** and create a key.
 3. Export it as an environment variable (every example reads this):
 
@@ -50,8 +51,10 @@ curl -X POST https://api.apimodels.app/v1/images/generations \
 
 ## 4. What a $0.10 balance actually buys
 
-New accounts start with **$0.10**. Every example in this repo except voice cloning
-runs inside that, and running all of them in this order still leaves change:
+The trial credit is **$0.10**. Every example in this repo except voice cloning fits
+inside that on its own, but not all of them back to back: the video clip alone is
+$0.088. Run the video example first if you want to see it on trial credit; chat,
+embeddings and text‑to‑speech still fit after it.
 
 | Example | Model | Cost per run | Fits in $0.10? |
 |---|---|---|---|
@@ -60,16 +63,16 @@ runs inside that, and running all of them in this order still leaves change:
 | `text-to-speech.*` | `eleven-tts-flash` | ~$0.004 (min charge) | yes |
 | `image-generation.*` | `gpt-image-2-lite` @ 1024×1024 | $0.008 | yes |
 | `image-edit.sh` | `gpt-image-2-lite` @ 1536×1024 | $0.015 | yes (needs your own image URL) |
-| `video-generation.*` | `veo-3.1-fast-fhd` | $0.07 flat | yes — but only this one video model |
+| `video-generation.*` | `veo-3.1-fast-fhd` | $0.088 flat | yes — on its own, run it first |
 | `voice-clone.sh` | MiniMax voice cloning | **$15.80 once per voice** | **no** — top up first |
 
 Two things worth knowing before you spend:
 
-- **Video is the expensive modality.** `veo-3.1-fast-fhd` at $0.07 per clip is the
-  only video model a fresh $0.10 account can complete. The next cheapest are
-  `grok-video-3` ($0.12 for its 6‑second minimum) and `seedance-2.0-fast` (~$0.36
-  for a short 480p clip) — both cost more than the whole signup credit and will
-  return `402 Insufficient credits`.
+- **Video is the expensive modality.** `veo-3.1-fast-fhd` is $0.088 for one 8‑second
+  1080p clip (its 720p version, `veo-3.1-fast-hd`, is $0.08), so it fits in the $0.10
+  trial credit. Many other video models cost more than the whole trial credit —
+  `grok-video-3` is $0.24 for its 6‑second minimum, `seedance-2.0-fast` $0.28 for a
+  4‑second 480p clip — and will return `402 Insufficient credits`.
 - **Voice cloning is a flat $15.80**, charged once when the clone succeeds. That is
   the upstream custom‑voice fee at cost, not a per‑second rate. Read the warning at
   the top of `curl/voice-clone.sh` before running it.
@@ -106,7 +109,7 @@ Every id below was checked against the live API. When in doubt,
 `curl https://api.apimodels.app/v1/models` is the source of truth.
 
 - **Image** — `gpt-image-2-lite`, `gpt-image-2`, `gemini-3-pro-image`, `grok-imagine-image`, `doubao-seedream-4-5-251128`, `kling-image-o1`
-- **Video** — `veo-3.1-fast-fhd` (cheapest, $0.07/clip), `grok-video-3`, `seedance-2.0-fast`, `seedance-2.0`, `kling-v2-6`, `minimax-h3`, `veo-3.1`
+- **Video** — `veo-3.1-fast-fhd` ($0.088 per 8‑second 1080p clip), `grok-video-3`, `seedance-2.0-fast`, `seedance-2.0`, `kling-v2-6`, `minimax-h3`, `veo-3.1`
 - **LLM** — Claude, GPT, Gemini, DeepSeek, Qwen, GLM families (OpenAI‑compatible names — see docs)
 - **Audio** — `eleven-tts-flash`, `eleven-tts-turbo`, `eleven-tts-multilingual`, `eleven-tts-v3` (all on `/tts/stream`); `minimax-speech-02-turbo`, `suno-v5` (on `/audio/generations`)
 
@@ -124,8 +127,8 @@ Async tasks return `data.taskId`; poll the matching `GET ...?task_id=<id>` until
 The OpenAI‑compatible paths (`/chat/completions`, `/embeddings`, `/models`, and
 `/images/generations` in synchronous mode) return OpenAI's own shapes instead.
 
-**Generated files are kept for 7 days.** Download anything you want to keep — the
-result URL stops working after that.
+**Generated files are kept for 30 days, then deleted.** Download anything you want to
+keep — the result URL stops working after that.
 
 ## License
 

@@ -16,7 +16,7 @@ client = OpenAI(
 
 resp = client.embeddings.create(
     model="text-embedding-3-small",  # see docs for available embedding models
-    input="API Models gives you one key for every model.",
+    input="APIMODELS gives you one key for every model.",
 )
 vec = resp.data[0].embedding
 print(f"dimensions: {len(vec)}")

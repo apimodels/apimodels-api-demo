@@ -6,7 +6,7 @@ eleven-tts-multilingual, eleven-tts-v3.
 
 COST: $0.0425 per 1000 characters on flash/turbo ($0.085 on multilingual/v3), with
       a minimum charge of one tenth of that. The call below bills about $0.004 —
-      well inside the $0.10 signup credit.
+      well inside the $0.10 trial credit.
 
     export APIMODELS_API_KEY="sk-..."
     python text_to_speech.py
@@ -22,7 +22,7 @@ with requests.post(
     headers={"Authorization": f"Bearer {API_KEY}", "Content-Type": "application/json"},
     json={
         "model": "eleven-tts-flash",
-        "text": "Hello from API Models. This audio was generated through one unified API.",
+        "text": "Hello from APIMODELS. This audio was generated through one unified API.",
         # "voice_id": "21m00Tcm4TlvDq8ikWAM",  # optional
     },
     stream=True,

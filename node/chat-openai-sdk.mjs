@@ -1,7 +1,7 @@
 // Chat / LLM via the official OpenAI SDK — just change baseURL.
 //
 // COST: token-based. A one-sentence answer from claude-sonnet-4-6 costs well under
-//       $0.001, so this runs many times over inside the $0.10 signup credit.
+//       $0.001, so this runs many times over inside the $0.10 trial credit.
 //
 //   npm install
 //   export APIMODELS_API_KEY="sk-..."
