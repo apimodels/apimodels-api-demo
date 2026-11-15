@@ -8,7 +8,8 @@
     "image": "node image-generation.mjs",
     "video": "node video-generation.mjs",
     "chat": "node chat-openai-sdk.mjs",
-    "tts": "node text-to-speech.mjs"
+    "tts": "node text-to-speech.mjs",
+    "transcribe": "node transcribe.mjs"
   },
   "dependencies": {
     "openai": "^4.0.0"

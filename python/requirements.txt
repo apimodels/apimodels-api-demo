@@ -1,4 +1,4 @@
 # openai  — the OpenAI-compatible chat / embeddings examples
-# requests — the image / video / TTS / balance examples (plain REST)
+# requests — the image / video / TTS / speech-to-text / balance examples (plain REST)
 openai>=1.0.0
 requests>=2.31.0

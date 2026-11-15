@@ -61,6 +61,7 @@ embeddings and text‑to‑speech still fit after it.
 | `chat-*` | `claude-sonnet-4-6` | < $0.001 (token‑based) | yes |
 | `embeddings.py` | `text-embedding-3-small` | fractions of a cent | yes |
 | `text-to-speech.*` | `eleven-tts-flash` | ~$0.004 (min charge) | yes |
+| `transcribe.*` | `nemotron-3.5-transcribe` | $0.0025 per audio minute | yes (needs your own audio URL) |
 | `image-generation.*` | `gpt-image-2-lite` @ 1024×1024 | $0.008 | yes |
 | `image-edit.sh` | `gpt-image-2-lite` @ 1536×1024 | $0.015 | yes (needs your own image URL) |
 | `video-generation.*` | `veo-3.1-fast-fhd` | $0.088 flat | yes — on its own, run it first |
@@ -83,9 +84,9 @@ Failed generations are not charged. Live prices: **[apimodels.app/pricing](https
 
 | Folder | Language | Examples |
 |---|---|---|
-| [`curl/`](./curl) | Shell / cURL | image, image edit, video (+poll), chat, text‑to‑speech, voice clone, balance |
-| [`python/`](./python) | Python 3 | image, video, chat (OpenAI SDK), embeddings, TTS, balance |
-| [`node/`](./node) | Node.js (ESM) | image, video, chat (OpenAI SDK), TTS, balance |
+| [`curl/`](./curl) | Shell / cURL | image, image edit, video (+poll), chat, text‑to‑speech, speech‑to‑text, voice clone, balance |
+| [`python/`](./python) | Python 3 | image, video, chat (OpenAI SDK), embeddings, TTS, speech‑to‑text, balance |
+| [`node/`](./node) | Node.js (ESM) | image, video, chat (OpenAI SDK), TTS, speech‑to‑text, balance |
 
 ## 6. Endpoints covered
 
@@ -97,6 +98,7 @@ Failed generations are not charged. Live prices: **[apimodels.app/pricing](https
 | Embeddings | `POST /embeddings` | OpenAI‑compatible |
 | Text‑to‑speech | `POST /tts/stream` | Streams audio bytes. This is where the `eleven-tts-*` models live — they are **not** accepted by `/audio/generations`. |
 | Other audio (music, dialogue, dubbing, MiniMax TTS) | `POST /audio/generations` → `GET /audio/generations?task_id=` | `suno-v5`, `eleven-dialogue`, `eleven-isolator`, `eleven-dubbing`, `minimax-speech-*`, `kling-*` |
+| Speech‑to‑text (transcription) | `POST /audio/generations` → `GET /audio/generations?task_id=` | `nemotron-3.5-transcribe`. Send `audio_url`; optional `timestamps` or `target_language` (not both). The result is text: `data.resultJson` is a JSON string — parse it and read `text` and `transcript_url` (the full JSON, with word timestamps and speakers when `timestamps` is `true`). $0.0025 per audio minute; up to 60 minutes / 200 MB per file. |
 | Account balance | `GET /balance` | Your remaining credits (USD); free, read‑only |
 | Voices & cloning | `GET /minimax/voices`, `POST /minimax/voice/clone` | List, clone or design custom voices (cloning is $15.80 per voice) |
 | Model list | `GET /models` | OpenAI‑compatible, **no API key needed** — the authoritative list of ids you can call |
@@ -109,9 +111,9 @@ Every id below was checked against the live API. When in doubt,
 `curl https://api.apimodels.app/v1/models` is the source of truth.
 
 - **Image** — `gpt-image-2-lite`, `gpt-image-2`, `gemini-3-pro-image`, `grok-imagine-image`, `doubao-seedream-4-5-251128`, `kling-image-o1`
-- **Video** — `veo-3.1-fast-fhd` ($0.088 per 8‑second 1080p clip), `grok-video-3`, `seedance-2.0-fast`, `seedance-2.0`, `kling-v2-6`, `minimax-h3`, `veo-3.1`
+- **Video** — `veo-3.1-fast-fhd` ($0.088 per 8‑second 1080p clip), `grok-video-3`, `seedance-2.0-fast`, `seedance-2.0`, `kling-v2-6`, `kling-4.0`, `kling-4.0-flash` (720p, 3–20 seconds, $0.094 per second; same request fields as `kling-4.0`), `minimax-h3`, `veo-3.1`
 - **LLM** — Claude, GPT, Gemini, DeepSeek, Qwen, GLM families (OpenAI‑compatible names — see docs)
-- **Audio** — `eleven-tts-flash`, `eleven-tts-turbo`, `eleven-tts-multilingual`, `eleven-tts-v3` (all on `/tts/stream`); `minimax-speech-02-turbo`, `suno-v5` (on `/audio/generations`)
+- **Audio** — `eleven-tts-flash`, `eleven-tts-turbo`, `eleven-tts-multilingual`, `eleven-tts-v3` (all on `/tts/stream`); `minimax-speech-02-turbo`, `suno-v5` (on `/audio/generations`); `nemotron-3.5-transcribe` (speech‑to‑text, on `/audio/generations`)
 
 ## 8. Response shape
 
@@ -123,6 +125,11 @@ Task‑based endpoints return:
 
 Async tasks return `data.taskId`; poll the matching `GET ...?task_id=<id>` until
 `data.state` is `completed` (then read `data.resultUrls`) or `failed`.
+
+Speech‑to‑text is the one task whose result is text rather than a file: on a
+completed `nemotron-3.5-transcribe` task, `data.resultJson` is a JSON **string**
+(`{"task", "text", "duration", "transcript_url"}`) — parse it once, as
+`transcribe.*` does. `data.resultUrls[0]` is the same `transcript_url`.
 
 The OpenAI‑compatible paths (`/chat/completions`, `/embeddings`, `/models`, and
 `/images/generations` in synchronous mode) return OpenAI's own shapes instead.

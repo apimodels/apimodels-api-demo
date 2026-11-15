@@ -57,6 +57,7 @@ curl -X POST https://api.apimodels.app/v1/images/generations \
 | `chat-*` | `claude-sonnet-4-6` | 不到 $0.001(按 token) | 够 |
 | `embeddings.py` | `text-embedding-3-small` | 不到一分钱 | 够 |
 | `text-to-speech.*` | `eleven-tts-flash` | 约 $0.004(触发最低计费) | 够 |
+| `transcribe.*` | `nemotron-3.5-transcribe` | 每分钟音频 $0.0025 | 够(但要你自己的音频外链) |
 | `image-generation.*` | `gpt-image-2-lite` 1024×1024 | $0.008 | 够 |
 | `image-edit.sh` | `gpt-image-2-lite` 1536×1024 | $0.015 | 够(但要你自己的图片外链) |
 | `video-generation.*` | `veo-3.1-fast-fhd` | 每条 $0.088(固定价) | 单独够 —— 请第一个跑 |
@@ -77,9 +78,9 @@ curl -X POST https://api.apimodels.app/v1/images/generations \
 
 | 目录 | 语言 | 示例 |
 |---|---|---|
-| [`curl/`](./curl) | Shell / cURL | 图片、图片编辑、视频(含轮询)、对话、语音合成、音色复刻、余额 |
-| [`python/`](./python) | Python 3 | 图片、视频、对话(OpenAI SDK)、向量、TTS、余额 |
-| [`node/`](./node) | Node.js (ESM) | 图片、视频、对话(OpenAI SDK)、TTS、余额 |
+| [`curl/`](./curl) | Shell / cURL | 图片、图片编辑、视频(含轮询)、对话、语音合成、语音转文字、音色复刻、余额 |
+| [`python/`](./python) | Python 3 | 图片、视频、对话(OpenAI SDK)、向量、TTS、语音转文字、余额 |
+| [`node/`](./node) | Node.js (ESM) | 图片、视频、对话(OpenAI SDK)、TTS、语音转文字、余额 |
 
 ## 6. 覆盖的端点
 
@@ -91,6 +92,7 @@ curl -X POST https://api.apimodels.app/v1/images/generations \
 | 向量 Embedding | `POST /embeddings` | 兼容 OpenAI |
 | 语音合成 TTS | `POST /tts/stream` | 流式返回音频字节。`eleven-tts-*` 系列只在这个端点上,`/audio/generations` **不收**这些名字 |
 | 其它音频(音乐 / 对话 / 配音 / MiniMax TTS) | `POST /audio/generations` → `GET /audio/generations?task_id=` | `suno-v5`、`eleven-dialogue`、`eleven-isolator`、`eleven-dubbing`、`minimax-speech-*`、`kling-*` |
+| 语音转文字(转写) | `POST /audio/generations` → `GET /audio/generations?task_id=` | `nemotron-3.5-transcribe`。传 `audio_url`;可选 `timestamps` 或 `target_language`(二者不能同用)。结果是文本:`data.resultJson` 是一个 JSON 字符串,解析后读 `text` 和 `transcript_url`(完整结果 JSON,`timestamps` 为 `true` 时带词级时间戳和说话人)。每分钟音频 $0.0025;单个文件最长 60 分钟、最大 200 MB |
 | 账户余额 | `GET /balance` | 查询剩余额度(美元),免费、只读 |
 | 音色与复刻 | `GET /minimax/voices`、`POST /minimax/voice/clone` | 列出 / 复刻 / 设计自定义音色(复刻每个音色 $15.80) |
 | 模型列表 | `GET /models` | 兼容 OpenAI,**不需要 API Key** —— 能调通的模型名以它为准 |
@@ -103,9 +105,9 @@ curl -X POST https://api.apimodels.app/v1/images/generations \
 `curl https://api.apimodels.app/v1/models` 的返回为准。
 
 - **图片** —— `gpt-image-2-lite`、`gpt-image-2`、`gemini-3-pro-image`、`grok-imagine-image`、`doubao-seedream-4-5-251128`、`kling-image-o1`
-- **视频** —— `veo-3.1-fast-fhd`(8 秒 1080p 每条 $0.088)、`grok-video-3`、`seedance-2.0-fast`、`seedance-2.0`、`kling-v2-6`、`minimax-h3`、`veo-3.1`
+- **视频** —— `veo-3.1-fast-fhd`(8 秒 1080p 每条 $0.088)、`grok-video-3`、`seedance-2.0-fast`、`seedance-2.0`、`kling-v2-6`、`kling-4.0`、`kling-4.0-flash`(720p,3–20 秒,每秒 $0.094;请求字段与 `kling-4.0` 相同)、`minimax-h3`、`veo-3.1`
 - **大模型** —— Claude / GPT / Gemini / DeepSeek / Qwen / GLM 系列(兼容 OpenAI 命名,见文档)
-- **语音** —— `eleven-tts-flash`、`eleven-tts-turbo`、`eleven-tts-multilingual`、`eleven-tts-v3`(都走 `/tts/stream`);`minimax-speech-02-turbo`、`suno-v5`(走 `/audio/generations`)
+- **语音** —— `eleven-tts-flash`、`eleven-tts-turbo`、`eleven-tts-multilingual`、`eleven-tts-v3`(都走 `/tts/stream`);`minimax-speech-02-turbo`、`suno-v5`(走 `/audio/generations`);`nemotron-3.5-transcribe`(语音转文字,走 `/audio/generations`)
 
 ## 8. 返回结构
 
@@ -117,6 +119,10 @@ curl -X POST https://api.apimodels.app/v1/images/generations \
 
 异步任务返回 `data.taskId`;轮询对应的 `GET ...?task_id=<id>`,直到 `data.state`
 为 `completed`(读 `data.resultUrls`)或 `failed`。
+
+语音转文字是唯一一种结果是文本而不是文件的任务:`nemotron-3.5-transcribe` 任务完成后,
+`data.resultJson` 是一个 JSON **字符串**(`{"task", "text", "duration", "transcript_url"}`),
+需要再解析一次,写法见 `transcribe.*`;`data.resultUrls[0]` 就是同一个 `transcript_url`。
 
 兼容 OpenAI 的那几条路径(`/chat/completions`、`/embeddings`、`/models`,以及同步
 模式下的 `/images/generations`)返回 OpenAI 自己的结构。
